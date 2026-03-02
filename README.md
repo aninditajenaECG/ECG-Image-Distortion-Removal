@@ -28,87 +28,15 @@ These distortions degrade segmentation fidelity and structural waveform recovery
 
 This project benchmarks multiple restoration strategies under identical evaluation metrics.
 
-# Approaches Implemented
+#Approaches Implemented
 1️⃣ Classical Image Processing
 
-A deterministic morphological preprocessing pipeline:
-
-RGB → HSV transformation
-
-Value channel extraction
-
-Multi-Otsu threshold segmentation
-
-Morphological opening and closing
-
-Binary inversion
-
-Designed primarily for structured wrinkle distortions.
-
-Performance (Wrinkled Images)
-
-Dice Coefficient: 0.9699
-
-SSIM: 0.8860
-
-Characteristics
-
-No training required
-
-Low computational cost
-
-Limited generalization capability
+The classical approach is based on a deterministic morphological preprocessing pipeline designed to restore structured ECG distortions without requiring any learning-based training. The method begins with RGB to HSV color space transformation, followed by extraction of the value channel to emphasize intensity information. Multi-Otsu thresholding is applied for segmentation, enabling separation of waveform structures from the background. Morphological opening and closing operations are then performed to remove noise artifacts and refine structural continuity, followed by binary inversion to obtain the final segmentation mask. This approach is particularly effective for structured distortions such as wrinkles, offering low computational cost and straightforward implementation. However, due to its rule-based nature, it demonstrates limited generalization across heterogeneous distortion types.
 
 2️⃣ GAN-Enhanced U-Net
 
-An encoder–decoder segmentation architecture augmented with adversarial training.
-
-Architecture Components
-
-Convolutional encoder–decoder backbone
-
-Skip connections for spatial preservation
-
-Adversarial discriminator for structural refinement
-
-Optimized for rotation-based distortions and structural consistency recovery.
-
-Performance (Rotated Images)
-
-Dice Coefficient: 0.9972
-
-SSIM: 0.9308
-
-Characteristics
-
-Learns spatial invariance
-
-High segmentation precision
-
-Requires distortion-specific training
+The GAN-enhanced U-Net model leverages a deep encoder–decoder segmentation architecture augmented with adversarial training to improve structural realism and segmentation fidelity. The U-Net backbone consists of a convolutional encoder that captures hierarchical spatial features and a decoder that reconstructs high-resolution segmentation maps using skip connections to preserve fine-grained waveform details. An adversarial discriminator is incorporated to enforce structural consistency and encourage realistic waveform reconstruction. This architecture is particularly suited for correcting global geometric distortions such as rotation, as it learns spatial invariance and distortion-aware feature representations. While the model achieves high segmentation precision and structural recovery, it requires distortion-specific training and increased computational resources compared to classical methods.
 
 3️⃣ Mixture-of-Experts (MoE) Model
 
-A unified multi-expert deep learning architecture where:
-
-Each expert network is trained on a specific distortion class
-
-Learned expert parameters are stored independently
-
-During inference, distortion-aware weighting enables robust segmentation
-
-This enables a single model to generalize across heterogeneous distortion types.
-
-Performance (Multi-Distortion Dataset)
-
-Dice Coefficient: 0.9972
-
-SSIM: 0.9608
-
-Characteristics
-
-Strong cross-distortion generalization
-
-Higher structural similarity preservation
-
-Increased architectural complexity
+The Mixture-of-Experts (MoE) model is a unified deep learning framework designed to handle multiple distortion types within a single architecture. In this approach, each expert network is trained independently on a specific distortion class, allowing specialization in learning distortion-specific feature representations. The learned parameters of each expert are stored separately after training. During inference, a distortion-aware weighting mechanism leverages the expertise of the most relevant networks to generate the final segmentation output. This modular design enables robust generalization across heterogeneous distortion conditions while preserving structural waveform fidelity. Although the architecture introduces higher complexity and computational overhead, it provides strong cross-distortion adaptability and improved structural consistency compared to single-model approaches.
