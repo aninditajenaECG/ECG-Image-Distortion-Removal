@@ -1,6 +1,12 @@
 # ECG-Image-Distortion-Removal
 Performance-driven ECG image restoration framework analyzing classical processing, adversarial U-Net models, and Mixture-of-Experts architecture for generalized multi-distortion correction.
 
+<p align="center">
+  <img src="MOE_datflow_diagram.png" width="800">
+</p>
+![MOE_datflow diagram](https://github.com/user-attachments/assets/f8389773-f744-41af-90e5-370e72bcb5aa)
+
+
 #Supported Distortions
 
 Wrinkles
